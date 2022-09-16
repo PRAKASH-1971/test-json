@@ -1,14 +1,52 @@
 {
-  "posts": [
+  "users": [
     {
-      "id": 1,
-      "title": "Hello World",
-      "body": "Quia et suscipit\nsuscipit recusandae consequuntur expedita et cum\nreprehenderit molestiae ut ut quas totam\nnostrum rerum est autem sunt rem eveniet architecto"
+      "name": "Prakash Dsouza",
+      "age": 45,
+      "place": "karkal",
+      "batch": "WEB-15",
+      "profession": "Frontend",
+      "id": 1
     },
     {
-      "id": 2,
-      "title": "Eum Et Est Occaecati",
-      "body": "Recusandae consequuntur expedita et cum\nreprehenderit ut quas totam\nautem sunt rem eveniet architecto"
+      "name": "christin",
+      "age": 1,
+      "place": "mumbai",
+      "batch": "WEB-15",
+      "profession": "Frontend",
+      "id": 2
+    },
+    {
+      "name": "savio",
+      "age": 90,
+      "place": "karkal",
+      "batch": "WEB-13",
+      "profession": "Frontend",
+      "id": 8
+    },
+    {
+      "name": "Frnacis",
+      "age": 78,
+      "place": "karkal",
+      "batch": "WEB-14",
+      "profession": "FSD",
+      "id": 10
+    },
+    {
+      "name": "jio",
+      "age": 85,
+      "place": "Goa",
+      "batch": "WEB-14",
+      "profession": "Student",
+      "id": 11
+    },
+    {
+      "name": "Prakash Dsouza",
+      "age": 78,
+      "place": "56",
+      "batch": "WEB-15",
+      "profession": "Backend",
+      "id": 12
     }
   ]
 }

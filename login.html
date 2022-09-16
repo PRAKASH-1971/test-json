@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #main{
+        display: flex;
+        flex-direction: column;
+        width: fit-content;
+        margin: 50px auto;
+        text-align: center;
+    }
+    form{
+        display: flex;
+        flex-direction: column;
+        gap: 20px;
+    }
+    input{
+        width: 400px;
+        height: 30px;
+    }
+    #btn{
+        width: 250px ;
+        height: 40px;
+        margin: auto;
+        background: rgb(240, 58, 121);
+        border: none;
+        padding: 10px;
+        color: rgb(20, 16, 16);
+        font-weight: 600;
+        font-size: 18px;
+    }
+</style>
+
+<body>
+    <div id="main">
+    <h1>Login Page</h1>
+    <form>
+        <input type="email" placeholder="Enter email" id="email">
+        <input type="password" placeholder="Enter Password" id="password">
+        <input type="button" id="btn" onclick="myFunction()" value="Log-In">
+    </form>
+</div>
+</body>
+
+</html>
+<script>
+    function myFunction() {
+        var email = document.getElementById("email").value;
+        var password = document.getElementById("password").value;
+
+
+        async function postData(url = 'https://reqres.in/api/login', data = { email, password }) {
+            fetch(url,{
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+                .then((r) => {
+                    console.log(r.status)
+                    if(r.status === 200){
+                        sessionStorage.setItem("Role","Admin")
+                        window.location.href="./data.html"
+                    }else{
+                        alert("Not Admin")
+                        window.location.href="/"
+                    }
+                })
+                .catch((e) => {
+                    console.log(e);
+                    alert("Login Failed")
+                })
+        }
+        postData();
+    }
+
+
+
+
+
+</script>

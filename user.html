@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+  #frm{
+    display: flex;
+    flex-direction: column;
+    height: fit-content;
+    padding: 10px;
+    width: fit-content;
+    margin: 50px auto;
+    gap: 15px;
+  }
+  input{
+    width: 400px;
+    height: 30px;
+  }
+  select{
+    width: 410px;
+    height: 35px;
+  }
+  #btn{
+    width: 250px;
+    height: 40px;
+    margin: 10px auto;
+    background: rgb(228, 143, 143);
+    border: none;
+    padding: 10px;
+    font-weight: 700;
+  font-size: 18px;
+  cursor: pointer;
+  }
+</style>
+<body>
+    <form id="frm">
+    <input type="text" placeholder="Enter Name" id="name">
+    <input type="number" placeholder="Enter Age" id="age">
+    <input type="text" placeholder="Enter Place" id="place">
+    <select id="batch">
+        <option value="">Batch Name</option>
+        <option value="WEB-13">WEB-13</option>
+        <option value="WEB-14">WEB-14</option>
+        <option value="WEB-15">WEB-15</option>
+        <option value="WEB-16">WEB-16</option>
+        <option value="WEB-17">WEB-17</option>
+    </select>
+    <select id="profession">
+        <option value="">Enter Profession</option>
+        <option value="FSD">FSD</option>
+        <option value="Frontend">Frontend</option>
+        <option value="Backend">Backend</option>
+        <option value="Student">Student</option>
+    </select>
+    <input type="button" id="btn" onclick="myFunction()" value="Submit">
+</form>
+</body>
+</html>
+<script>
+    function myFunction(){
+      // e.preventDefault()
+      console.log("res")
+        var obj = {}
+//  var val= document.getElementById("myForm").submit();
+ var name= document.getElementById("name").value;
+ var age= Number(document.getElementById("age").value)
+ var place= document.getElementById("place").value;
+ var batch= document.getElementById("batch").value;
+ var profession= document.getElementById("profession").value;
+  obj = {name,age,place,batch,profession}
+  // console.log(obj);
+
+  async function postData(url = 'http://localhost:3000/users', data = {name,age,place,batch,profession}) {
+  fetch(url, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    }).then(res => {
+  // console.log("Request complete! response:", res);
+  if(res){
+    window.location.href="/"
+    alert("successfully registered")
+  }
+  
+});
+    
+  }
+
+  postData();
+}
+
+</script>

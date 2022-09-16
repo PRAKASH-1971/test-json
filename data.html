@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://kit.fontawesome.com/976e422f89.js" crossorigin="anonymous"></script>
+    <title>Document</title>
+</head>
+<style>
+    #maindiv{
+        width: 83%;
+        margin: auto;
+        display: flex;
+        justify-content: space-between;
+    }
+    #userdata {
+        display: grid;
+        grid-template-columns: repeat(4, 300px);
+        text-align: center;
+        width: fit-content;
+        margin: 25px auto;
+        gap: 20px;
+    }
+
+    .image-product {
+        width: 250px;
+        height: 150px;
+        margin: auto;
+    }
+
+    .main-info {
+        display: flex;
+        flex-direction: column;
+        gap: 10px;
+    }
+
+    .semmain-info {
+        display: flex;
+        flex-direction: column;
+        border: 1px solid black;
+        justify-content: center;
+        align-items: center;
+        gap: 15px;
+        padding: 10px;
+    }
+
+    .semmain-info h3,
+    h4,
+    p {
+        margin: 0;
+        padding: 0;
+    }
+    select{
+        width: 300px;
+        height: 40px;
+        padding: 0px 10px;
+        font-weight: 600;
+        font-size: 17px;
+    }
+    #search{
+        width: 400px;
+        height: 35px;
+        padding: 0px 15px;
+    }
+    .fa-trash-alt{
+        cursor: pointer;
+        width: 100%;
+    }
+</style>
+
+<body>
+    <div id="maindiv">
+    <select onchange="sortItems()" id="sorter">
+        <option value="">Sort By Age</option>
+        <option value="asc">High to Low</option>
+        <option value="desc">Low to High</option>
+    </select>
+    <select onchange="filterItems()" id="filtersorter">
+        <option value="">Filter By Batch</option>
+        <option value="WEB-13">WEB-13</option>
+        <option value="WEB-14">WEB-14</option>
+        <option value="WEB-15">WEB-15</option>
+        <option value="WEB-16">WEB-16</option>
+        <option value="WEB-17">WEB-17</option>
+    </select>
+    <input type="text" placeholder="Search here" id="search">
+</div>
+    <div id="userdata">
+    </div>
+</body>
+
+</html>
+<script>
+    async function getproducts() {
+        // window.location.reload()
+        try {
+            let res = await fetch('http://localhost:3000/users');
+            let data = await res.json();
+            // console.log(data)
+            appenddata(data)
+        } catch (err) {
+            console.log("err", err)
+        }
+    }
+
+    getproducts()
+
+    let userdata = document.getElementById("userdata")
+
+
+    function appenddata(data) {
+        // console.log("appenddatadatadatadata",data)
+        userdata.innerHTML = null
+        data?.map(function (item) {
+            console.log("item", item)
+            let userdata = document.getElementById("userdata")
+            var main = document.createElement("div")
+            var semmain = document.createElement("div")
+            var name = document.createElement("h3")
+            var age = document.createElement("h4")
+            var batch = document.createElement("h4")
+            var place = document.createElement("p")
+            var profession = document.createElement("p")
+            var icon = document.createElement("i")
+            var edit = document.createElement("button")
+            var id = item.id
+
+            var image = document.createElement("img")
+            image.setAttribute("src", "https://mpng.subpng.com/20190419/fvb/kisspng-computer-icons-user-profile-portable-network-graph-5cb9f8c9e607f6.0894876015556917219422.jpg")
+            image.className = "image-product"
+            main.className = "main-info"
+            semmain.className = "semmain-info"
+
+            name.innerText = `Name : ${item.name}`
+            age.innerText = `Age : ${item.age}`
+            batch.innerText = `Batch : ${item.batch}`
+            place.innerText = `Place : ${item.place}`
+            profession.innerText = `Position : ${item.profession}`
+            edit.innerText = "EDIT"
+
+            icon.className = "fas fa-trash-alt"
+            icon.addEventListener("click", function () {
+                //    addtocart(item);
+                console.log(item);
+                async function delData(url = `http://localhost:3000/users/${item.id}`) {
+                    console.log(data);
+                    fetch(url, {
+                        method: 'DELETE',
+                        headers: {
+                            'Content-Type': 'application/json'
+                        },
+                    })
+                        .then((r) => {
+                            console.log(data)
+                            // window.location.reload()
+                        })
+                        .catch((e) => {
+                            console.log(e);
+                            alert("delete Failed")
+                        })
+                }
+                delData();
+            })
+
+            edit.addEventListener("click", function () {
+                window.location.href=`./edit.html?id=${item.id}`
+            })
+
+
+            main.append(name, age, batch, place, profession,edit, icon)
+            semmain.append(image, main)
+            userdata.append(semmain)
+        })
+
+    }
+
+    document.getElementById("search").addEventListener("change",mysearch)
+
+    function mysearch(){
+      var x = document.getElementById("search").value
+      console.log(x)
+      async function getsearch() {
+            try {
+                let res = await fetch('http://localhost:3000/users');
+                let data = await res.json();
+                var searchdata = data.filter((item) => item.name === x)
+                appenddata(searchdata)                 
+            } catch (err) {
+                console.log("err", err)
+            }
+        }
+        getsearch()
+    // window.location.reload()
+    }
+
+    function sortItems() {
+        var sort = document.getElementById("sorter").value;
+        async function getaort() {
+            try {
+                let res = await fetch('http://localhost:3000/users');
+                let data = await res.json();
+                // console.log(data)
+                if (sort === "asc") {
+                    data.sort((a, b) => b.age - a.age)
+                    appenddata(data)
+                }
+                if (sort === "desc") {
+                    data.sort((a, b) => a.age - b.age)
+                    appenddata(data)
+                }
+                // appenddata(data)
+            } catch (err) {
+                console.log("err", err)
+            }
+        }
+        getaort()
+    }
+
+
+    function filterItems() {
+        var filterval = document.getElementById("filtersorter").value;
+        console.log(filterval);
+        async function getfilter() {
+            try {
+                let res = await fetch('http://localhost:3000/users');
+                let data = await res.json();
+                var filtereddata = data.filter((item) => item.batch === filterval)
+                appenddata(filtereddata)                 
+            } catch (err) {
+                console.log("err", err)
+            }
+        }
+        getfilter()
+
+
+    }
+</script>

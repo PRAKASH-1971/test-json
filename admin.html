@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<style>
+    #nav{
+        width: 100%;
+        background: rgb(153, 152, 152);
+        padding: 10px;
+    }
+     .navbar {
+            display: flex;
+            flex-direction: row;
+            width: 70%;
+            height: 20%;
+            justify-content: space-around;
+            margin: auto;
+            align-items: center;
+        }
+
+        .navbar a {
+            text-decoration: none;
+            color: black;
+            font-size: 18px;
+            background-color: aliceblue;
+            padding: 10px;
+            cursor: pointer;
+            letter-spacing: 0.2rem;
+        }
+
+        .icomns{
+            display: none;
+        }
+
+.smallmenu{
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    margin: auto;
+    display: none;
+}
+.smallmenu h4{
+padding: 10px;
+border: 1px solid black;
+}
+
+.select{
+    border: 1px solid black;
+    height: fit-content;
+    padding: 10px;
+    margin-top: 200px;
+}
+
+.select option{
+    padding: 10px;
+}
+        @media only screen and (max-width: 900px){
+            .icomns{
+                display: block;
+        }
+        .navbar{
+            display: none;
+        }
+}
+</style>
+<body>
+    <div id="nav">
+    <div class="navbar">
+        <a href="./login.html">LOGIN</a>
+        <a href="./data.html">DATA</a>
+        <a href="./reports.html">REPORTS</a>
+    </div>
+    <div class="icomns">
+        <fun class="fas fa-bars open" id="open"  ></i>
+    </div>
+    
+    <div class="smallmenu" id="smallmenu">
+        <i class="fas fa-times close" id="close"></i>
+        <a href="./login.html">LOGIN</a>
+        <a class="data" href="./data.html">DATA</a>
+        <a id="report" href="./reports.html">REPORTS</a>
+    </div>
+</div>
+
+</body>
+</html>
+<script>
+const role = sessionStorage.getItem("Role")
+console.log(role);
+
+if(role !== "Admin"){
+     document.getElementById("report").style.display = "none"
+}
+
+
+      const bars = document.getElementById("open")
+    const userbox = document.getElementById("user")
+    const menu = document.getElementById("smallmenu")
+    const closed = document.getElementById("close")
+    bars.addEventListener("click",open)
+    closed.addEventListener("click",close)
+
+    function open(){
+ console.log("clicked")
+ bars.style.display = "none"
+ menu.style.display = "block"
+}
+function close(){
+    console.log("close")
+    menu.style.display = "none"
+    bars.style.display = "block"
+}
+</script>

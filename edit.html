@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <form>
+        <input type="text" placeholder="Enter Name" id="name">
+        <input type="number" placeholder="Enter Age" id="age">
+        <input type="text" placeholder="Enter Place" id="place">
+        <select id="batch">
+            <option value="">Batch Name</option>
+            <option value="WEB-13">WEB-13</option>
+            <option value="WEB-14">WEB-14</option>
+            <option value="WEB-15">WEB-15</option>
+            <option value="WEB-16">WEB-16</option>
+            <option value="WEB-17">WEB-17</option>
+        </select>
+        <select id="profession">
+            <option value="">Enter Profession</option>
+            <option value="FSD">FSD</option>
+            <option value="Frontend">Frontend</option>
+            <option value="Backend">Backend</option>
+            <option value="Student">Student</option>
+        </select>
+        <input type="button" onclick="myFunction()" value="Submit form">
+    </form>
+</body>
+</html>
+<script>
+    let url = window.location.href;
+    let params = (new URL(url)).searchParams;
+    var ID = params.get('id')
+    console.log("ID",ID);
+
+
+    async function getaort() {
+            try {
+                let res = await fetch(`http://localhost:3000/users/${ID}`);
+                let data = await res.json();
+                console.log(data)
+                document.getElementById("name").value = data.name
+                document.getElementById("age").value =data.age
+                document.getElementById("place").value = data.place
+                document.getElementById("batch").value = data.batch
+                document.getElementById("profession").value = data.profession    
+            } catch (err) {
+                console.log("err", err)
+            }
+        }
+        getaort()
+
+function myFunction(){
+
+
+    var obj = {}
+//  var val= document.getElementById("myForm").submit();
+var name =  document.getElementById("name").value
+var age= Number(document.getElementById("age").value)
+var place= document.getElementById("place").value;
+ var batch= document.getElementById("batch").value;
+ var profession= document.getElementById("profession").value;
+  obj = {name,age,place,batch,profession}
+
+//   console.log(obj);
+
+  async function postData(url = `http://localhost:3000/users/${ID}`, data = {name,age,place,batch,profession}) {
+  fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(data)
+    }).then(res => {
+  // console.log("Request complete! response:", res);
+  window.location.href="./data.html"
+  
+});
+    
+  }
+  postData();
+
+}
+
+
+</script>
